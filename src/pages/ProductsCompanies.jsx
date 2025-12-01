@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
 
@@ -16,9 +16,12 @@ function classNames(...classes) {
 
 export default function ProductsCompanies() {
     const { user, logout, loading } = useContext(AuthContext);
+
     const { id } = useParams();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [company, setCompany] = useState(null);
 
@@ -178,7 +181,7 @@ export default function ProductsCompanies() {
                     {products.map((product) => (
                     <div
                         key={product.id}
-                        className="bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full min-h-[275px] hover:-translate-y-2 hover:border-blue-400"
+                        className="bg-slate-800/60 backdrop-blur-lg border border-slate-700 rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col h-full min-h-[285px] hover:-translate-y-2 hover:border-blue-400"
                     >
                         <h3 className="text-xl font-semibold text-blue-400">
                             {product.nombre}
@@ -192,11 +195,19 @@ export default function ProductsCompanies() {
                         </div>
                         
                         <button
-                            onClick={() => navigate(`/products/${product.id}/reserve`)}
+                            onClick={() => {
+                                if (!user || !user.id) {
+                                    alert('Debes iniciar sesión para reservar un producto.');
+                                    navigate('/login', { state: { from: location.pathname } });
+                                    return;
+                                }
+                                navigate(`/products/${product.id}/reserve`);
+                            }}
                             className="mt-auto w-full py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
                         >
-                            Reservar
-                        </button>                        
+                                Reservar
+                        </button>
+                       
                     </div>
                     
                     ))}

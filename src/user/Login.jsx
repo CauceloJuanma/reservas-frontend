@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import axios from "../api/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from '../context/AuthContext';
 
 const navigation = [
@@ -15,9 +15,13 @@ function classNames(...classes) {
 
 export default function Login() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
+
   const [form, setForm] = useState({ correo: "", pass: "" });
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { login } = useContext(AuthContext);
 
    const handleNavigation = (href) => {
@@ -54,9 +58,9 @@ export default function Login() {
         console.log("🍪 Cookies:", document.cookie);
         
         // 6. Redirigir CON RECARGA COMPLETA (importante)
+        const from = location.state?.from || '/'; // ← Si viene de otra página, va ahí; sino a home
         setTimeout(() => {
-            //window.location.href = "/";
-            navigate("/");
+            navigate(from, { replace: true }); // ← replace evita que quede el login en el historial
         }, 800);
         
     } catch (err) {

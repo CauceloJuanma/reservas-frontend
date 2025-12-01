@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
-import axios from "../api/axios";
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -20,19 +19,6 @@ export default function Home() {
     const { user, logout, loading } = useContext(AuthContext); // ✅ Agregado loading
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const navigate = useNavigate();
-
-    // ✅ useEffect SIEMPRE al nivel superior, antes de cualquier return condicional
-    //useEffect(() => {
-    //    fetchHomeData();
-    //}, []);
-
-    //const fetchHomeData = async () => {
-    //    try {
-    //        await axios.get('/api/');
-    //    } catch (err) {
-    //        console.error('Error al obtener datos:', err);
-    //    }
-    //};
 
     const handleNavigation = (href) => {
         navigate(href);

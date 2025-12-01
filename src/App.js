@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Register from "./components/Register";
-import Login from "./components/Login";
-//import Profile from "./components/Profile";
-import Home from "./components/Home";
-import Companies from "./components/Companies";
-import Reservations from "./components/Reservations";
-import ProductsCompanies from "./components/ProductsCompanies";
-import ReservationForm from "./components/ReservationForm";
+import Register from "./user/Register";
+import Login from "./user/Login";
+//import Profile from "./user/Profile";
+import Home from "./pages/Home";
+import Companies from "./pages/Companies";
+import Reservations from "./pages/Reservations";
+import ProductsCompanies from "./pages/ProductsCompanies";
+import ReservationForm from "./pages/ReservationForm";
 
 function App() {
   return (
