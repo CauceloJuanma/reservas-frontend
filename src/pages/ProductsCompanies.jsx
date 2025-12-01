@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "../api/axios";
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import ReservationModal from '../components/ReservationModal';
 
 
 const navigation = [
@@ -26,6 +27,27 @@ export default function ProductsCompanies() {
     const [company, setCompany] = useState(null);
 
     const [products, setProducts] = useState([]);
+
+
+    const [selectedProduct, setSelectedProduct] = useState(null); // para modal
+    const [reservationId, setReservationId] = useState(null);
+
+    const handleReserveClick = (product) => {
+        if (!user || !user.id) {
+            alert('Debes iniciar sesión para reservar un producto.');
+            navigate('/login', { state: { from: location.pathname } });
+            return;
+        }
+        setSelectedProduct(product); // Abrir modal
+    };
+
+    const handleReservationSuccess = (id) => {
+        setReservationId(id);
+        // Opcional: redirigir a página de resumen
+        // navigate(`/reservations/${id}`);
+    };
+
+
 
     useEffect(() => {
         axios.get(`/api/products/${id}`)
@@ -195,14 +217,7 @@ export default function ProductsCompanies() {
                         </div>
                         
                         <button
-                            onClick={() => {
-                                if (!user || !user.id) {
-                                    alert('Debes iniciar sesión para reservar un producto.');
-                                    navigate('/login', { state: { from: location.pathname } });
-                                    return;
-                                }
-                                navigate(`/products/${product.id}/reserve`);
-                            }}
+                            onClick={() => handleReserveClick(product)}
                             className="mt-auto w-full py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg hover:shadow-lg transition-all"
                         >
                                 Reservar
@@ -213,6 +228,17 @@ export default function ProductsCompanies() {
                     ))}
                     
                 </div>
+
+                {/* Modal de reserva */}
+                {selectedProduct && (
+                    <ReservationModal
+                        product={selectedProduct}
+                        onClose={() => setSelectedProduct(null)}
+                        onSuccess={handleReservationSuccess}
+                    />
+                )}
+
+
                 <div className="mt-8 text-center">
                     <button
                             onClick={() => navigate(`/companies`)}

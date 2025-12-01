@@ -4,9 +4,9 @@ import Login from "./user/Login";
 //import Profile from "./user/Profile";
 import Home from "./pages/Home";
 import Companies from "./pages/Companies";
-import Reservations from "./pages/Reservations";
 import ProductsCompanies from "./pages/ProductsCompanies";
 import ReservationForm from "./pages/ReservationForm";
+import ReservationDetail from "./pages/ReservationDetail";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/companies" element={<Companies />} />
-        <Route path="/reservations" element={<Reservations />} />
+        <Route path="/reservations" element={<ReservationDetail />} />
         <Route path="/products/:id" element={<ProductsCompanies />} />
         <Route path="/products/:id/reserve" element={<ReservationForm />} />
       </Routes>
