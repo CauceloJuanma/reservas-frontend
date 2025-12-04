@@ -6,7 +6,9 @@ import Home from "./pages/Home";
 import Companies from "./pages/Companies";
 import ProductsCompanies from "./pages/ProductsCompanies";
 import ReservationForm from "./pages/ReservationForm";
+import ReservationList from "./pages/ReservationList";
 import ReservationDetail from "./pages/ReservationDetail";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
@@ -16,9 +18,24 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/companies" element={<Companies />} />
-        <Route path="/reservations" element={<ReservationDetail />} />
         <Route path="/products/:id" element={<ProductsCompanies />} />
         <Route path="/products/:id/reserve" element={<ReservationForm />} />
+        <Route
+          path="/reservations"
+          element={
+            <ProtectedRoute>
+              <ReservationList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/reservations/:id"
+          element={
+            <ProtectedRoute>
+              <ReservationDetail />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
