@@ -28,8 +28,7 @@ export const AuthProvider = ({ children }) => {
     console.log("🔄 Actualizando contexto con usuario:", userData);
     setUser(userData);
     
-    // ✅ NO verificar inmediatamente, dejar que window.location.href recargue
-    // La verificación se hará automáticamente cuando recargue la página
+    
     };
 
     const logout = async () => {

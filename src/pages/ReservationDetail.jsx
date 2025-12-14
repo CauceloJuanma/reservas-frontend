@@ -14,7 +14,7 @@ export default function ReservationDetail() {
     const [confirming, setConfirming] = useState(false);
     const [canceling, setCanceling] = useState(false);
 
-    // ✅ Usar useCallback para evitar crear una nueva función en cada render
+    // Usar useCallback para evitar crear una nueva función en cada render
     const fetchReservation = useCallback(async () => {
         try {
             const res = await axios.get(`/api/reservations/${id}`);
@@ -34,7 +34,7 @@ export default function ReservationDetail() {
         }
     }, [id, authLoading, fetchReservation]);
 
-    // ✅ Validar si la reserva ya pasó su fecha/hora
+    // Validar si la reserva ya pasó su fecha/hora
     const haPasadoLaReserva = reservation?.fecha_hora && 
         new Date(reservation.fecha_hora) < new Date();
 
@@ -56,7 +56,7 @@ export default function ReservationDetail() {
     };
 
     const handleCancel = async () => {
-        // ✅ Validación frontend: No permitir cancelar reservas pasadas
+        // Validación frontend: No permitir cancelar reservas pasadas
         if (haPasadoLaReserva) {
             alert('❌ No puedes cancelar reservas que ya han pasado su fecha/hora');
             return;
@@ -140,7 +140,7 @@ export default function ReservationDetail() {
                         {getEstadoBadge()}
                     </div>
 
-                    {/* ✅ AVISO RESERVA PASADA */}
+                    {/* AVISO RESERVA PASADA */}
                     {haPasadoLaReserva && (
                         <div className="bg-orange-500/20 border-2 border-orange-500 text-orange-300 p-6 rounded-2xl mb-8 shadow-lg">
                             <div className="flex items-start gap-3">
@@ -255,7 +255,7 @@ export default function ReservationDetail() {
                                     {confirming ? 'Confirmando...' : '✅ Confirmar Reserva'}
                                 </button>
 
-                                {/* ✅ Botón cancelar CONDICIONAL */}
+                                {/* Botón cancelar CONDICIONAL */}
                                 {!haPasadoLaReserva ? (
                                     <button
                                         onClick={handleCancel}

@@ -3,14 +3,14 @@ import axios from '../api/axios';
 
 export default function ReservationModal({ product, onClose, onSuccess }) {
     const [cantidad, setCantidad] = useState(1);
-    const [fechaReserva, setFechaReserva] = useState(new Date().toISOString().split('T')[0]); // ✅ Hoy por defecto
+    const [fechaReserva, setFechaReserva] = useState(new Date().toISOString().split('T')[0]);
     const [horaReserva, setHoraReserva] = useState('');
     const [slots, setSlots] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingSlots, setLoadingSlots] = useState(true);
     const [error, setError] = useState('');
 
-    // ✅ Cargar slots disponibles del producto
+    // Cargar slots disponibles del producto
     useEffect(() => {
         let isMounted = true;
         
@@ -22,7 +22,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
                 if (isMounted && response.data.success) {
                     setSlots(response.data.slots || []);
                     if (response.data.hasTimeRestriction && response.data.slots?.length > 0) {
-                        // ✅ Seleccionar primera hora válida (no pasada)
+                        // Seleccionar primera hora válida (no pasada)
                         const primeraHoraValida = response.data.slots.find(slot => 
                             esHoraValidaParaHoy(slot)
                         );
@@ -46,7 +46,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
         };
     }, [product?.id]);
 
-    // ✅ Función para validar si una hora es válida para HOY
+    // Función para validar si una hora es válida para HOY
     const esHoraValidaParaHoy = (hora) => {
         const ahora = new Date();
         const [horaActual, minutoActual] = [
@@ -58,7 +58,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
         return hora >= horaActualStr;
     };
 
-    // ✅ Función para filtrar slots válidos según fecha
+    // Función para filtrar slots válidos según fecha
     const getSlotsValidos = () => {
         if (fechaReserva !== new Date().toISOString().split('T')[0]) {
             // Si no es hoy, todas las horas son válidas
@@ -98,7 +98,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
         const nuevaFecha = e.target.value;
         setFechaReserva(nuevaFecha);
         
-        // ✅ Si cambian a una fecha futura, permitir todas las horas
+        // Si cambian a una fecha futura, permitir todas las horas
         if (nuevaFecha !== new Date().toISOString().split('T')[0]) {
             setHoraReserva(slots[0] || '');
         } else {
@@ -113,7 +113,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
         setLoading(true);
         setError('');
 
-        // ✅ Validar fecha y hora si hay slots
+        // Validar fecha y hora si hay slots
         if (slots.length > 0 && (!fechaReserva || !horaReserva)) {
             setError('Debes seleccionar fecha y hora de reserva');
             setLoading(false);
@@ -126,7 +126,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
             return;
         }
 
-        // ✅ Validar que la hora no sea pasada para HOY
+        // Validar que la hora no sea pasada para HOY
         if (fechaReserva === new Date().toISOString().split('T')[0] && !esHoraValidaParaHoy(horaReserva)) {
             setError('No puedes reservar para horas pasadas del día actual');
             setLoading(false);
@@ -167,7 +167,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
         }
     };
 
-    // ✅ Calcular fecha máxima (30 días)
+    // Calcular fecha máxima (30 días)
     const fechaMaxima = new Date();
     fechaMaxima.setDate(fechaMaxima.getDate() + 30);
     const fechaMaxStr = fechaMaxima.toISOString().split('T')[0];
@@ -230,7 +230,7 @@ export default function ReservationModal({ product, onClose, onSuccess }) {
                         </p>
                     </div>
 
-                    {/* ✅ Selector FECHA + HORA con validación de horas pasadas */}
+                    {/* Selector FECHA + HORA */}
                     {loadingSlots ? (
                         <div className="text-center py-4">
                             <p className="text-gray-400 text-sm">Cargando horarios disponibles...</p>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import Footer from '../components/Footer';
@@ -6,16 +6,10 @@ import Header from '../components/Header';
 
 
 export default function Home() {
-    const { loading } = useContext(AuthContext); // ✅ Agregado loading
-    const setMobileMenuOpen = useState(false);
+    const { loading } = useContext(AuthContext);
     const navigate = useNavigate();
 
-    const handleNavigation = (href) => {
-        navigate(href);
-        setMobileMenuOpen(false);
-    };
-
-    // ✅ Condicional DESPUÉS de todos los hooks
+    // Condicional DESPUÉS de todos los hooks
     if (loading) {
         return (
             <div className="bg-gray-900 min-h-screen flex items-center justify-center">

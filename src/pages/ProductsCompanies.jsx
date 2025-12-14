@@ -20,7 +20,7 @@ export default function ProductsCompanies() {
     const [products, setProducts] = useState([]);
 
 
-    const [selectedProduct, setSelectedProduct] = useState(null); // para modal
+    const [selectedProduct, setSelectedProduct] = useState(null);
     const [reservationId, setReservationId] = useState(null);
 
     const handleReserveClick = (product) => {
@@ -29,13 +29,12 @@ export default function ProductsCompanies() {
             navigate('/login', { state: { from: location.pathname } });
             return;
         }
-        setSelectedProduct(product); // Abrir modal
+        setSelectedProduct(product);
     };
 
     const handleReservationSuccess = (id) => {
         setReservationId(id);
-        // Opcional: redirigir a página de resumen
-        // navigate(`/reservations/${id}`);
+        navigate(`/reservations/${id}`);
     };
 
 

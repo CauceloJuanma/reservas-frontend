@@ -23,7 +23,7 @@ export default function Header() {
         setMobileMenuOpen(false);
     };
 
-    // ✅ Determinar página actual
+    // Determinar página actual
     const isCurrentPage = (href) => {
         if (href === '/') {
             return location.pathname === '/';
